@@ -18,5 +18,8 @@ nose = '^1.3'
 coverage = '4.5.2'
 
 [build-system]
-requires = ['poetry>=0.12']
+requires = [
+    'poetry>=0.12',
+    'setuptools>=56',
+]
 build-backend = 'poetry.masonry.api'
