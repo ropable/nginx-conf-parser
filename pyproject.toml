@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "nginx-conf-parser"
-version = "0.1.1"
-description = "A python library for parsing Nginx Configuration files"
-license = 'MIT'
+version = "0.1.2"
+description = "A Python library for parsing Nginx configuration files"
+license = "MIT"
 authors = [
     'Hamza ESSAYEGH <hamza.essayegh@protonmail.com>'
 ]
 readme = 'README.md'
-homepage = 'https://github.com/Querdos/nginx-conf-parser'
-repository = 'https://github.com/Querdos/nginx-conf-parser'
+homepage = "https://github.com/ropable/nginx-conf-parser"
+repository = "https://github.com/ropable/nginx-conf-parser"
 
 [tool.poetry.dependencies]
-python = "^3.4 || ^3.5 || ^3.6"
+python = "^3.4 || ^3.5 || ^3.6 || ^3.7 || ^3.8 || ^3.9"
 
 [tool.poetry.dev-dependencies]
 nose = '^1.3'
