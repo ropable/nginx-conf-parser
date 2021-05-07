@@ -10,11 +10,11 @@ class LocationContextTest(unittest.TestCase):
         location {
             limit_except GET {
                 allow 192.168.1.0/32;
-                deny  all; 
+                deny  all;
             }
             limit_except POST {
                 allow 192.168.1.25/24;
-                deny  all; 
+                deny  all;
             }
             types {
                 application/octet-stream bin exe dll;
@@ -22,13 +22,13 @@ class LocationContextTest(unittest.TestCase):
                 application/octet-stream dmg;
             }
             absolute_redirect on;
-            
+
             accept 192.168.1.1;
             accept 10.1.1.0/32;
-            
+
             deny 192.168.1.2;
             deny all;
-            
+
             aio on;
             aio_write on;
             alias /data/w3/images/;
@@ -70,6 +70,7 @@ class LocationContextTest(unittest.TestCase):
             output_buffers 4 22k;
             port_in_redirect off;
             postpone_output 1423;
+            proxy_pass http://someserver.domain:8080;
             read_ahead 14;
             recursive_error_pages on;
             reset_timedout_connection on;
@@ -629,6 +630,10 @@ class LocationContextTest(unittest.TestCase):
         self._update_directive('postpone_output 1423;', '')
         self.assertIsNotNone(self.location.postpone_output)
         self.assertEqual('1460', self.location.postpone_output)
+
+    def test_proxy_pass(self):
+        self.assertIsNotNone(self.location.proxy_pass)
+        self.assertEqual('http://someserver.domain:8080', self.location.proxy_pass)
 
     def test_read_ahead_extraction(self):
         self.assertIsNotNone(self.location.read_ahead)
