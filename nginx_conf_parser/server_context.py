@@ -300,12 +300,10 @@ class ServerContext:
                     http2='http2' in listen[1] if len(listen) == 2 else False,
                     spdy='spdy' in listen[1] if len(listen) == 2 else False,
                     proxy_protocol='proxy_protocol' in listen[1] if len(listen) == 2 else False,
-                    setfib=int(re.search(r'setfib=([^\s]*)', listen[1]).group(1)) if len(listen) == 2 and 'setfib' in
-                                                                                     listen[1] else None,
+                    setfib=int(re.search(r'setfib=([^\s]*)', listen[1]).group(1)) if len(listen) == 2 and 'setfib' in listen[1] else None,
                     fastopen=int(re.search(r'fastopen=([^\s]*)', listen[1]).group(1)) if len(
                         listen) == 2 and 'fastopen' in listen[1] else None,
-                    backlog=int(re.search(r'backlog=([^\s]*)', listen[1]).group(1)) if len(listen) == 2 and 'backlog' in
-                                                                                       listen[1] else None,
+                    backlog=int(re.search(r'backlog=([^\s]*)', listen[1]).group(1)) if len(listen) == 2 and 'backlog' in listen[1] else None,
                     rcvbuf=re.search(r'rcvbuf=([^\s]*)', listen[1]).group(1) if len(listen) == 2 and 'rcvbuf' in listen[
                         1] else None,
                     sndbuf=re.search(r'sndbuf=([^\s]*)', listen[1]).group(1) if len(listen) == 2 and 'sndbuf' in listen[
@@ -314,8 +312,7 @@ class ServerContext:
                         listen) == 2 and 'accept_filter' in listen[1] else None,
                     deferred='deferred' in listen[1] if len(listen) == 2 else False,
                     bind='bind' in listen[1] if len(listen) == 2 else False,
-                    ipv6only=re.search(r'ipv6only=(on|off)', listen[1]).group(1) if len(listen) == 2 and 'ipv6only' in
-                                                                                    listen[1] else 'on',
+                    ipv6only=re.search(r'ipv6only=(on|off)', listen[1]).group(1) if len(listen) == 2 and 'ipv6only' in listen[1] else 'on',
                     reuseport='reuseport' in listen[1] if len(listen) == 2 else False,
                     so_keepalive=re.search(r'so_keepalive=([^\s]*)', listen[1]).group(1) if len(
                         listen) == 2 and 'so_keepalive' in listen[1] else None

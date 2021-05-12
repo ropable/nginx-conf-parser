@@ -7,7 +7,7 @@ from nginx_conf_parser.limit_except_context import LimitExceptContext
 class LocationContextTest(unittest.TestCase):
     def setUp(self):
         self.context_string = """
-        location {
+        location = / {
             limit_except GET {
                 allow 192.168.1.0/32;
                 deny  all;
@@ -830,6 +830,10 @@ class LocationContextTest(unittest.TestCase):
         self._update_directive('types_hash_max_size 512;', '')
         self.assertIsNotNone(self.location.types_hash_max_size)
         self.assertEqual('1024', self.location.types_hash_max_size)
+
+    def test_uri(self):
+        self.assertIsNotNone(self.location.uri)
+        self.assertEqual('= /', self.location.uri)
 
 
 if __name__ == '__main__':

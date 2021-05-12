@@ -28,6 +28,7 @@ class LocationContext:
     error_page = None
     etag = None
     if_modified_since = None
+    includes = None
     internal = False
     keepalive_disable = None
     keepalive_requests = None
@@ -71,6 +72,7 @@ class LocationContext:
     types = None
     types_hash_bucket_size = None
     types_hash_max_size = None
+    uri = None
 
     def __init__(self, content):
         self._content = content.replace('\n', ' ')
@@ -214,6 +216,10 @@ class LocationContext:
         # if_modified_since directive
         if_modified_since = re.search(r'if_modified_since\s+(off|exact|before);', self._content)
         self.if_modified_since = if_modified_since.group(1) if if_modified_since else 'exact'
+
+        # include directives
+        includes = [_ for _ in re.findall(r'include\s+([^;]*)', self._content)]
+        self.includes = includes if includes else None
 
         # internal directive
         self.internal = 'internal;' in self._content
@@ -429,3 +435,7 @@ class LocationContext:
         # types_hash_max_size directive
         types_hash_max_size = re.search(r'types_hash_max_size\s+([^;]*)', self._content)
         self.types_hash_max_size = types_hash_max_size.group(1) if types_hash_max_size else '1024'
+
+        # uri
+        uri = re.search(r"location\s+(=?\^?~?\*?\s*[^\s^{]+)\s+{", self._content)
+        self.uri = uri.group(1) if uri else None
