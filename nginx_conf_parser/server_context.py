@@ -30,6 +30,7 @@ class ServerContext:
     etag = None
     if_modified_since = None
     ignore_invalid_headers = None
+    includes = None
     keepalive_disable = None
     keepalive_requests = None
     keepalive_timeout = None
@@ -230,6 +231,10 @@ class ServerContext:
         # ignore_invalid_headers directive
         ignore_invalid_headers = re.search(r'ignore_invalid_headers\s+(on|off)', self._content)
         self.ignore_invalid_headers = ignore_invalid_headers.group(1) if ignore_invalid_headers else 'on'
+
+        # include directives
+        includes = [_ for _ in re.findall(r'include\s+([^;]*)', self._content)]
+        self.includes = includes if includes else None
 
         # keepalive_disable directive
         keepalive_disable = re.search(r'keepalive_disable\s+([^;]*)', self._content)

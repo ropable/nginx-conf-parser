@@ -9,13 +9,15 @@ class ServerContextTest(unittest.TestCase):
     def setUp(self):
         self.context_string = """
         server {
+            include custom/rules.conf;
+            include custom/morerules.conf;
             location /test {
                 aio on;
-                aio_write on; 
+                aio_write on;
             }
             location /test2 {
                 aio off;
-                aio_write off; 
+                aio_write off;
             }
             types {
                 application/octet-stream bin exe dll;
@@ -23,13 +25,13 @@ class ServerContextTest(unittest.TestCase):
                 application/octet-stream dmg;
             }
             absolute_redirect on;
-            
+
             accept 192.168.1.1;
             accept 10.1.1.0/32;
-            
+
             deny 192.168.1.2;
             deny all;
-            
+
             aio on;
             aio_write on;
             auth_jwt "closed site" token=$cookie_auth_token;
@@ -62,13 +64,13 @@ class ServerContextTest(unittest.TestCase):
             lingering_close on;
             lingering_time 34s;
             lingering_timeout 8s;
-            
+
             listen 127.0.0.1:8000 ssl http2 backlog=4 reuseport so_keepalive=on;
             listen 127.0.0.1 setfib=34 sndbuf=2k bind;
             listen 8000 default_server spdy accept_filter=dataready so_keepalive=off;
             listen *:8000 fastopen=32 rcvbuf=4k deferred;
             listen localhost:8000 proxy_protocol ipv6only=off so_keepalive=30m::10;
-            
+
             log_not_found off;
             log_subrequest on;
             max_ranges 32;
@@ -446,6 +448,10 @@ class ServerContextTest(unittest.TestCase):
         self._update_directive('ignore_invalid_headers on;', '')
         self.assertIsNotNone(self.server.ignore_invalid_headers)
         self.assertEqual('on', self.server.ignore_invalid_headers)
+
+    def test_includes_extraction(self):
+        self.assertIsNotNone(self.server.includes)
+        self.assertEqual(['custom/rules.conf', 'custom/morerules.conf'], self.server.includes)
 
     def test_keepalive_disable_extraction(self):
         self.assertIsNotNone(self.server.keepalive_disable)
