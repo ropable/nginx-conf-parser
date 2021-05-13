@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nginx-conf-parser"
-version = "0.1.3"
+version = "0.1.4"
 description = "A Python library for parsing Nginx configuration files"
 license = "MIT"
 authors = [
