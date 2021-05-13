@@ -82,6 +82,10 @@ class ServerContext:
     def __init__(self, content):
         self._content = content
 
+        # include directives (run this before extracting location directives).
+        includes = [_ for _ in re.findall(r'include\s+([^;]*)', self._content)]
+        self.includes = includes if includes else None
+
         # extracting location directive
         location = [_ + '}' for _ in re.findall(r'(location[^}]*)', self._content)]
         self.location = [LocationContext(_) for _ in location]
@@ -231,10 +235,6 @@ class ServerContext:
         # ignore_invalid_headers directive
         ignore_invalid_headers = re.search(r'ignore_invalid_headers\s+(on|off)', self._content)
         self.ignore_invalid_headers = ignore_invalid_headers.group(1) if ignore_invalid_headers else 'on'
-
-        # include directives
-        includes = [_ for _ in re.findall(r'include\s+([^;]*)', self._content)]
-        self.includes = includes if includes else None
 
         # keepalive_disable directive
         keepalive_disable = re.search(r'keepalive_disable\s+([^;]*)', self._content)
